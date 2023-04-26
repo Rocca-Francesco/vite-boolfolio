@@ -8,16 +8,19 @@ export default {
   data() {
     return {
       endpointStart: "http://127.0.0.1:8000/api/projects",
-      projects: [],
+      projects: {
+        data: [],
+        pagination: [],
+      },
     }
   },
 
   methods: {
-    searchOnProjectApi() {
-
-      axios.get(this.endpointStart).then((response) => {
-        this.projects = response.data;
-        console.log(this.projects);
+    searchOnProjectApi(endpoint = null) {
+      if (!endpoint) endpoint = this.endpointStart;
+      axios.get(endpoint).then((response) => {
+        this.projects.data = response.data.data;
+        this.projects.pagination = response.data.links;
       });
 
     }
@@ -27,13 +30,15 @@ export default {
     this.searchOnProjectApi();
   },
 
+  emits: ['searchOnProjectApi'],
+
   components: { ProjectCard, Navbar }
 }
 </script>
 
 <template>
   <Navbar />
-  <ProjectCard :projects="projects" />
+  <ProjectCard :projects="projects.data" :pagination="projects.pagination" @searchOnProjectApi="searchOnProjectApi" />
 </template>
 
 <style lang="scss" ></style>
