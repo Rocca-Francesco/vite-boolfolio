@@ -16,7 +16,7 @@ export default {
 <template>
   <div class="container">
     <h1 class="px-1">{{ title }}</h1>
-    <div class="row p-2 justify-content-between">
+    <div class="row p-2">
       <div class="col-3 py-2 px-1" v-for="project in projects" key="{{ project.id }}">
         <div class="card m-2 p-0 h-100">
           <div class="card-header">
@@ -31,7 +31,7 @@ export default {
       </div>
       <nav class="my-2">
         <ul class="pagination">
-          <li v-for="page in  pagination ">
+          <li class="page-item" v-for="page in  pagination">
             <button type="button" class="page-link" :class="{ disabled: !page.url, active: page.active }"
               @click="$emit('searchOnProjectApi', page.url)" v-html="page.label"></button>
           </li>
@@ -41,4 +41,4 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
